@@ -9,6 +9,7 @@ https://console.cloud.google.com
 """
 
 from Init.Initializer import create_service
+from ParseMedia.Media import Media
 from ParseMedia.Albums import Albums
 
 
@@ -23,6 +24,6 @@ SCOPES = [READ_WRITE_SCOPE, SHARE_SCOPE]
 if __name__ == '__main__':
     service = create_service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPES)
     a = Albums(service)
-    title = "Sri Lanka"
-    album = a.get_album_by_title(title)
-    print(album.get("id"))
+    m = Media(service)
+    print(len(m.getMedia()))
+    print(m.getMedia())

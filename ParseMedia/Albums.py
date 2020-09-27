@@ -26,7 +26,7 @@ class Albums:
 
     def __init__(self, service):
         """
-        constructor
+        constructor for albums dictionary
         """
         self.__albums = service.albums().list(pageSize=ALBUMS_TO_SHOW).execute().get(ALBUMS)  # map of albums
 
