@@ -22,10 +22,18 @@ it enables some more specific operations and content manipulation to your media
 
 #### create a google cloud platform
  
-  google demands -  in order to use their API, one must open an account here:  `https://console.cloud.google.com/`
+  google demands -  in order to use their API, one must open an account here:  `https://console.cloud.google.com/` (denoted `LINK 1`)
   
-  you can check this link for further explanations: `https://www.youtube.com/watch?v=dkxcd2Q3Qwo`
-
+  the full google photos API can be found here:  `https://developers.google.com/photos/library/guides/overview` (denoted `LINK 2`)
+  
+  the links also contains some guidance, but here is a quick summarize of what you need to do:
+   * create a new project in google cloud platforms ('LINK 1')
+   * in 'LINK 2', under API's & Services > Library, search for Google Photos API and click ENABLE
+   * in 'LINK 2', under API's & Services > credentials, create an OAuth ID. this will create your client secret file, DOWNLOAD it and save it in the project repository.
+     (more on that later)
+   * install some google packages, (you can use: 'pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib')
+   * install pandas package (you can use: 'pip install pandas')
+   
 #### running the program:
 
   once you've followed the rules of the previous segmant, you should have a folder called something like client_secret.
