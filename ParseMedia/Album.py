@@ -13,8 +13,6 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from google.auth.transport.requests import Request
 
-from Exceptions import AlbumCreationError
-
 # SERVICE DATA: #
 API_NAME = 'photoslibrary'
 API_VERSION = 'v1'
@@ -36,9 +34,11 @@ ALBUM_DUPLICATE_MSG = "Album {0} already exists. did not create album"
 ALBUM_CREATION_FAIL_MSG = "Could not create album "
 
 TITLE = "title"
+ID = "id"
+ALBUMS = "albums"
 
 
-def Create_Service(client_secret_file, api_name, api_version, scopes):
+def Album(client_secret_file, api_name, api_version, scopes):
     """
     a static method that generates a service to work on from given data
     this specific function was written by Jie Jenn (youtube)
@@ -81,23 +81,24 @@ class Parser:
         """
         constructor
         """
-        self.__service = Create_Service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPES)
-        self.__response = self.__service.albums().list(pageSize=ALBUMS_TO_SHOW).execute()  # a map of albums
+        self.__service = Album(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPES)
+        self.__response = self.__service.albums().list(pageSize=ALBUMS_TO_SHOW).execute()  # a map of all the media
+        self.__albums = self.__response.get(ALBUMS)  # a map of albums
 
     def get_albums_map(self):
         """
         getter for the response (the map containing the albums)
         """
-        return self.__response
+        return self.__albums
 
-    def getAlbumByTitle(self, title):
+    def get_album_by_title(self, title):
         """
         finds album with given title in the data, prints an error if album
         doesnt exist
         :param title: some albums name
         :return: album dictionary
         """
-        for album in self.__response.get("albums"):
+        for album in self.__albums:
             if album.get(TITLE) == title:
                 return album
         print(NO_ALBUM_MSG + title)
@@ -108,24 +109,36 @@ class Parser:
         :param title: some albums name
         :return: true: exists, false: otherwise
         """
-        albums = self.__response.get("albums")
-        for album in albums:
+        for album in self.__albums:
             if album.get(TITLE) == title:
                 return True
         return False
 
-    def _get_album_title(self, album):
+    def get_album_title(self, album):
         """
         returns the name of the given album
         :param album: some album dictionary
         :return: name of the album (string)
         """
         try:
-            return_val = album.get(TITLE)
+            title = album.get(TITLE)
         except AttributeError:
             print(NON_EXISTING_MSG.format(album))
             return FAILURE
-        return return_val
+        return title
+
+    def get_album_id(self, album):
+        """
+        returns the id of the given album
+        :param album: some album dictionary
+        :return: id of the album (string)
+        """
+        try:
+            id = album.get(ID)
+        except AttributeError:
+            print(NON_EXISTING_MSG.format(album))
+            return FAILURE
+        return id
 
     def create_album(self, album_name):
         """
@@ -141,7 +154,13 @@ class Parser:
         print(ALBUM_DUPLICATE_MSG.format(album_name))
         return FAILURE
 
+    def add_item_to_album(self, album_title):
+        album = self.get_album_by_title(album_title)
+        id = album.get(ID)
+
 
 if __name__ == '__main__':
     p = Parser()
-    p.create_album("MOM IS THE BEST")
+    title = "Sri Lanka"
+    album = p.get_album_by_title(title)
+    print(album.get(ID))
