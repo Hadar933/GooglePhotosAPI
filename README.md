@@ -22,12 +22,9 @@ it enables some more specific operations and content manipulation to your media
 
 #### create a google cloud platform
  
-  google demands -  in order to use their API, one must open an account here:
+  google demands -  in order to use their API, one must open an account here:  `https://console.cloud.google.com/`
   
-  `https://console.cloud.google.com/`
-  
-  you can check this link for further explanations:
-  `https://www.youtube.com/watch?v=dkxcd2Q3Qwo`
+  you can check this link for further explanations: `https://www.youtube.com/watch?v=dkxcd2Q3Qwo`
 
 #### running the program:
 
