@@ -1,4 +1,4 @@
-GooglePhotosAPI inhencer (Python) - performs various operations on your google photos media
+GooglePhotosAPI enhencer (Python) - performs various operations on your google photos media
 -------------------------------------------------------------------------------
 
 ### created by:
