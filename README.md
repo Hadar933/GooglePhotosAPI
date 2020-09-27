@@ -1,4 +1,4 @@
-a GooglePhotosAPI inhencer (Python) - perform various operations on your google photos, videos and albums ;)
+a GooglePhotosAPI inhencer (Python) - perform various operations on your google photos, videos and albums
 -------------------------------------------------------------------------------
 
 ### created by:
@@ -18,7 +18,9 @@ it enables some more specific operations and content manipulation to your media
 #### create a google cloud platform
  
   google demands -  in order to use their API, one must open an account here:
+  
   `https://console.cloud.google.com/`
+  
   you can check this link for further explanations:
   `https://www.youtube.com/watch?v=dkxcd2Q3Qwo`
 
