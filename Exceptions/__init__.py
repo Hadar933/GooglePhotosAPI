@@ -1,0 +1,2 @@
+class AlbumCreationError:
+    pass
