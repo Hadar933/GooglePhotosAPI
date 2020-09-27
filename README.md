@@ -40,7 +40,7 @@ it enables some more specific operations and content manipulation to your media
 -------------------------------------------------------------------------------
   
 #### Remarks
-  # some methods may delete your media, so make sure you read the documentation!!
+  1. some methods may delete your media, so make sure you read the documentation!!
   
-  # currently a working progress. a more elaborate documentation will be added in the future
+  2. currently a working progress. a more elaborate documentation will be added in the future
   
