@@ -1,4 +1,4 @@
-a GooglePhotosAPI inhencer (Python) - perform various operations on your google photos, videos and albums
+GooglePhotosAPI inhencer (Python) - performs various operations on your google photos media
 -------------------------------------------------------------------------------
 
 ### created by:
@@ -6,11 +6,16 @@ a GooglePhotosAPI inhencer (Python) - perform various operations on your google 
 Hadar Sharvit
 
 -------------------------------------------------------------------------------
+### Version: 
+1.0
+
+-------------------------------------------------------------------------------
 
 ### Description:
 
 this is a basic project that enhances the performence of the google photos api.
 it enables some more specific operations and content manipulation to your media
+
 -------------------------------------------------------------------------------
 
 ### Try it yourself:
@@ -32,7 +37,10 @@ it enables some more specific operations and content manipulation to your media
   `CLIENT_SECRET_FILE`
   and use the program as you'd like. 
   
-#### beware
-  some methods may delete your media, so make sure you read the documentation!!
-
+-------------------------------------------------------------------------------
+  
+#### Remarks
+  ### some methods may delete your media, so make sure you read the documentation!!
+  
+ ### currently a working progress. a more elaborate documentation will be added in the future
   
