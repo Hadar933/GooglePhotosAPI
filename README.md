@@ -22,14 +22,14 @@ it enables some more specific operations and content manipulation to your media
 
 #### create a google cloud platform
  
-  google demands -  in order to use their API, one must open an account here:  `https://console.cloud.google.com/` (denoted `LINK 1`)
+  google demands -  in order to use their API, one must open an account here:  `https://console.cloud.google.com/` (denoted `LINK`)
   
-  the full google photos API can be found here:  `https://developers.google.com/photos/library/guides/overview` (denoted `LINK 2`)
+  the full google photos API can be found here:  `https://developers.google.com/photos/library/guides/overview` 
   
   the links also contains some guidance, but here is a quick summarize of what you need to do:
-   * create a new project in google cloud platforms (`LINK 1`)
-   * in `LINK 2`, under API's & Services > Library, search for Google Photos API and click ENABLE
-   * in `LINK 2`, under API's & Services > credentials, create an OAuth ID. this will create your client secret file, DOWNLOAD it and save it in the project repository.
+   * in `LINK`, create a new project in google cloud platforms
+   * in `LINK`, under API's & Services > Library, search for Google Photos API and click ENABLE
+   * in `LINK`, under API's & Services > credentials, create an OAuth ID. this will create your client secret file, DOWNLOAD it and save it in the project repository.
      (more on that later)
    * install some google packages, (use: `pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib`)
    * install pandas package (use: `pip install pandas`)
