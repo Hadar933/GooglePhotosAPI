@@ -31,8 +31,8 @@ it enables some more specific operations and content manipulation to your media
    * in `LINK 2`, under API's & Services > Library, search for Google Photos API and click ENABLE
    * in `LINK 2`, under API's & Services > credentials, create an OAuth ID. this will create your client secret file, DOWNLOAD it and save it in the project repository.
      (more on that later)
-   * install some google packages, (you can use: `pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib`)
-   * install pandas package (you can use: `pip install pandas`)
+   * install some google packages, (use: `pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib`)
+   * install pandas package (use: `pip install pandas`)
    
 #### running the program:
 
