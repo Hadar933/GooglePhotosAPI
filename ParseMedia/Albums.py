@@ -28,13 +28,14 @@ class Albums:
         """
         constructor for albums dictionary
         """
-        self.__albums = service.albums().list(pageSize=ALBUMS_TO_SHOW).execute().get(ALBUMS)  # map of albums
+        self.__albums = service.albums().list(pageSize=ALBUMS_TO_SHOW).execute()  # map of the data
+        self.__service = service
 
     def get_albums_map(self):
         """
         getter for the response (the map containing the albums)
         """
-        return self.__albums
+        return self.__albums.get("albums")
 
     def get_album_by_title(self, title):
         """
@@ -43,7 +44,7 @@ class Albums:
         :param title: some albums name
         :return: album dictionary or failure error code
         """
-        for album in self.__albums:
+        for album in self.get_albums_map():
             if album.get(TITLE) == title:
                 return album
         print(NO_ALBUM_MSG + title)
@@ -55,7 +56,7 @@ class Albums:
         :param title: some albums name
         :return: true: exists, false: otherwise
         """
-        for album in self.__albums:
+        for album in self.get_albums_map():
             if album.get(TITLE) == title:
                 return True
         return False
@@ -66,12 +67,7 @@ class Albums:
         :param album: some album dictionary
         :return: name of the album (string)
         """
-        try:
-            title = album.get(TITLE)
-        except AttributeError:
-            print(NON_EXISTING_MSG.format(album))
-            return FAILURE
-        return title
+        return album.get(TITLE)
 
     def get_album_id(self, album):
         """
@@ -79,12 +75,7 @@ class Albums:
         :param album: some album dictionary
         :return: id of the album (string)
         """
-        try:
-            id = album.get(ID)
-        except AttributeError:
-            print(NON_EXISTING_MSG.format(album))
-            return FAILURE
-        return id
+        return album.get(ID)
 
     def create_album(self, album_name):
         """
@@ -94,7 +85,7 @@ class Albums:
         """
         request_body = {"album": {"title": album_name}}
         if not self.doesAlbumExist(album_name):
-            self.__albums.create(body=request_body).execute()
+            self.__service.albums().create(body=request_body).execute()
             print(ALBUM_CREATION_SUCCESS_MSG.format(album_name))
             return SUCCESS
         print(ALBUM_DUPLICATE_MSG.format(album_name))

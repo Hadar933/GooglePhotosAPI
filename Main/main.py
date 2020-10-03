@@ -12,7 +12,6 @@ from Init.Initializer import create_service
 from ParseMedia.Media import Media
 from ParseMedia.Albums import Albums
 
-
 # SERVICE DATA: #
 API_NAME = 'photoslibrary'
 API_VERSION = 'v1'
@@ -23,7 +22,10 @@ SCOPES = [READ_WRITE_SCOPE, SHARE_SCOPE]
 
 if __name__ == '__main__':
     service = create_service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPES)
-    a = Albums(service)
-    m = Media(service)
-    print(len(m.getMedia()))
-    print(m.getMedia())
+    all = Albums(service)
+    sri = all.get_album_by_title("Sri Lanka")
+    print(all.get_album_title(sri))
+
+
+
+
