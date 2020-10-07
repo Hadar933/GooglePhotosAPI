@@ -1,4 +1,6 @@
 # RELEVANT CONSTANTS: #
+from Main.InvalidInputException import InvalidInputException
+
 ALBUMS_TO_SHOW = 50  # can only display 50 albums at once (maximum)
 SUCCESS = 1
 FAILURE = 0
@@ -72,16 +74,15 @@ class Album:
         """
         return self.__id
 
-    def create_album(self, album_name):
+    def get_album_by_title(self):
         """
-        creates an album with the given album name
-        :param album_name: some string representing a wanted name
-        :return: void
+        finds album with given title in the data, prints an error if album
+        doesnt exist
+        :param title: some albums name
+        :return: album dictionary or failure error code
         """
-        request_body = {"album": {"title": album_name}}
-        if not self.doesAlbumExist():
-            self.service.albums().create(body=request_body).execute()
-            print(ALBUM_CREATION_SUCCESS_MSG.format(album_name))
-            return SUCCESS
-        print(ALBUM_DUPLICATE_MSG.format(album_name))
-        return FAILURE
+        for album in self.get_albums_map():
+            if album.get(TITLE) == self.__title:
+                return album
+        raise InvalidInputException(NO_ALBUM_MSG + self.__title)
+

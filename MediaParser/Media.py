@@ -33,7 +33,6 @@ class Media:
         media_item_lst = []
         page_token = ""
         album = Album(self.__service).get_album_by_title(album_name)
-        album
         while True:
             body = {
                 "albumId": Album(self.__service).__set_album_id(album),
