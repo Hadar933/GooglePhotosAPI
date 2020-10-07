@@ -10,7 +10,7 @@ https://console.cloud.google.com
 from AlbumParser import AlbumParsing as ap
 
 if __name__ == '__main__':
-    mamek = ap.instantiate_album("fun with mamek")
-    for item in mamek.get_media():
-        print(item)
-
+    # mamek = ap.instantiate_album("fun with mamek")
+    # for item in mamek.get_media():
+    #     print(item)
+    ap.download_album_content("fun with mamek")

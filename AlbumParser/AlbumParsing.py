@@ -2,10 +2,14 @@
 in this file we perform all the parsing that is relevant to an album. additing albums, iterating over albums, etc...
 """
 
-# CONSTANTS: #
+# IMPOTRS: #
+import os
+
 from AlbumParser.Album import Album
 from Initializer.InitializeData import create_service
+import urllib.request
 
+# CONSTANTS: #
 MEDIA_TO_SHOW = 100  # can only display 100 media items at once
 ALBUMS_TO_SHOW = 50  # can only display 50 albums at once
 
@@ -100,3 +104,31 @@ def find_album_by_name(name, all_albums):
         if album == name:
             return all_albums[album]
     return None
+
+
+def download_media_item(media_base_url, file_name):
+    """
+    downloads the content of media_url and names it file_name
+    :param media_base_url: baseUrl field of some media item
+    :param file_name: name to give the saved item
+    """
+    urllib.request.urlretrieve(media_base_url, file_name)
+
+
+def download_album_content(album_name):
+    """
+    downloads the entire content of album_name and stores it in dir_name
+    """
+    # TODO: theres a problem with the videos - they do not play
+    album = instantiate_album(album_name)
+    dir_name = album_name.replace(" ", "_")+"_content"
+    os.mkdir(dir_name)
+    media = album.get_media()
+    downloaded = 0  # counter
+    for item in media:
+        base_url = item['baseUrl']
+        name = item['filename']  # includes type
+        path = dir_name + "/" + name
+        download_media_item(base_url, path)
+        downloaded += 1
+        print("downloaded ", downloaded, "/", len(media), "(", name, ")")
