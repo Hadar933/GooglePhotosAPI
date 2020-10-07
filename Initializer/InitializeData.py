@@ -5,19 +5,30 @@ from google.auth.transport.requests import Request
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 
+API_NAME = 'photoslibrary'
+API_VERSION = 'v1'
+CLIENT_SECRET_FILE = '../client_Secret.json'
+READ_WRITE_SCOPE = ['https://www.googleapis.com/auth/photoslibrary']
+SHARE_SCOPE = ['https://www.googleapis.com/auth/photoslibrary.sharing']
+SCOPES = [READ_WRITE_SCOPE, SHARE_SCOPE]
 
-def create_service(client_secret_file, api_name, api_version, scopes):
+
+def create_service():
     """
     a function that generates a service to work on from given data
-    this specific function was mostly provided by Jie Jenn (youtube)
-    :param client_secret_file: provided secret file info from google
-    :param api_name: name of the api
-    :param api_version: version of the api
-    :param scopes: the scopes to which we need access
+    mostly provided by Jie Jenn (youtube)
     :return: the service, or null
     """
-    print(client_secret_file, api_name, api_version, scopes, sep=', ')
-    all_scopes = [scope for scope in scopes[0]]
+
+    client_secret_file = '../client_Secret.json'
+    api_name = 'photoslibrary'
+    api_version = 'v1'
+    read_write_scope = ['https://www.googleapis.com/auth/photoslibrary']
+    share_scope = ['https://www.googleapis.com/auth/photoslibrary.sharing']
+    all_scopes = [read_write_scope, share_scope]
+
+    print(api_name, api_version, all_scopes, sep=', ')
+    all_scopes = [scope for scope in all_scopes[0]]
     cred = None
     pickle_file = f'token_{api_name}_{api_version}.pickle'
     if os.path.exists(pickle_file):

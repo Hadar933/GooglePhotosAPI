@@ -1,7 +1,7 @@
 """
 in this file we perform all the parsing that is relevant to an album. additing albums, iterating over albums, etc...
 """
-
+from AlbumParser.Album import Album
 from AlbumParser.DuplicateException import DuplicateException
 from Initializer.InitializeData import create_service
 from Main.InvalidInputException import InvalidInputException
@@ -13,61 +13,56 @@ ALBUM_CREATION_SUCCESS_MSG = "AlbumParser {0} created successfully"
 ALBUM_DUPLICATE_MSG = "AlbumParser {0} already exists. did not create album"
 NO_ALBUM_MSG = "These isn't an album named: "
 
-# RELEVANT STRINGS: #
-TITLE = "title"
+ALBUM_ID = "albums"  # identifier for the media item to be requested
+NEXT_TOKEN_ID = "nextPageToken"  # identifier for the media item to be requested# DATASET: #
 
-API_NAME = 'photoslibrary'
-API_VERSION = 'v1'
-CLIENT_SECRET_FILE = '../client_Secret.json'
-READ_WRITE_SCOPE = ['https://www.googleapis.com/auth/photoslibrary']
-SHARE_SCOPE = ['https://www.googleapis.com/auth/photoslibrary.sharing']
-SCOPES = [READ_WRITE_SCOPE, SHARE_SCOPE]
-
-SERVICE = create_service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPES)
+SERVICE = create_service()
 ALL_ALBUMS = SERVICE.albums().list(pageSize=ALBUMS_TO_SHOW).execute()
 
 
-def get_albums_map():
+def get_album_lst():
     """
-    getter for the response (the map containing the albums)
+    a helper method that returns a list of all albums, later to be converted to a dictionary
     """
-    return ALL_ALBUMS.get("albums")
+    albums_lst = []
+    page_token = ""
+    token = page_token if page_token != "" else ""
+    while True:
+        curr = SERVICE.albums().list(pageSize=ALBUMS_TO_SHOW, pageToken=token).execute()
+        albums = curr.get(ALBUM_ID, [])
+        albums_lst.extend(albums)
+        page_token = curr.get(NEXT_TOKEN_ID)
+        if not page_token:
+            break
+    return albums_lst
 
 
-def doesAlbumExist(self, title):
+def get_all_albums():
     """
-    checks if given album title is already in the data
-    :param title: some albums name
-    :return: true: exists, false: otherwise
+    returns a dictionary of albums where the key is the album name and the value is an album object
     """
-    for album in self.get_albums_map():
-        if album.get(TITLE) == title:
-            return True
-    return False
+    album_dict = dict()
+    album_lst = get_album_lst()
+    for album in album_lst:
+        media_id = album.get("id")
+        title = album.get("title")
+        product_url = album.get("productUrl")
+        item_count = album.get("mediaItemsCount")
+        cover_photo_url = album.get("coverPhotoBaseUrl")
+        cover_photo_id = album.get("coverPhotoMediaItemId")
+        album_dict[album.get("title")] = Album(media_id,title,product_url,item_count,cover_photo_url,cover_photo_id)
+    return album_dict
 
 
-def create_album(self, album_name):
+def create_album(album_name):
     """
     creates an album with the given album name
     :param album_name: some string representing a wanted name
     :return: void
     """
     request_body = {"album": {"title": album_name}}
-    if not self.doesAlbumExist(album_name):
-        self.SERVICE.albums().create(body=request_body).execute()
-        print(ALBUM_CREATION_SUCCESS_MSG.format(album_name))
-    raise DuplicateException(ALBUM_DUPLICATE_MSG.format(album_name))
+    SERVICE.albums().create(body=request_body).execute()
+    print(ALBUM_CREATION_SUCCESS_MSG.format(album_name))
 
 
-def get_album_by_title(self, title):
-    """
-    finds album with given title in the data, prints an error if album
-    doesnt exist
-    O(N) runtime (where N = number of albums, usually a rather small number)
-    :param title: some albums name
-    :return: album dictionary or failure error code
-    """
-    for album in self.get_albums_map():
-        if album.get(TITLE) == title:
-            return album
-    raise InvalidInputException(NO_ALBUM_MSG + title)
+

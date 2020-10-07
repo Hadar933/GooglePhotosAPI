@@ -1,6 +1,4 @@
-from AlbumParser.AlbumParsing import AlbumParsing
-ALBUMS_TO_SHOW = 50  # can only display 50 albums at once (maximum)
-ID = "id" # a relevant string for the album id
+from AlbumParser import AlbumParsing
 
 
 class Album:
@@ -9,43 +7,42 @@ class Album:
     the album's name
     """
 
-    def __init__(self, service, title):
+    def __init__(self, media_id, title, product_url, media_items_count, cover_photos_base_url, cover_photo_id):
         """
         constructor for an album instance
         """
-        self.all_albums = service.albums().list(pageSize=ALBUMS_TO_SHOW).execute() # TODO: maybe should be static
-        self.service = service  # TODO: maybe should be static
+        self.__id = media_id
         self.__title = title
-        self.__album_data = AlbumParsing.get_album_by_title(title)
-        self.__id = self.__album_data.get(ID)
+        self.__product_url = product_url
+        self.__media_items_count = media_items_count
+        self.__cover_photos_base_url = cover_photos_base_url
+        self.__cover_photo_id = cover_photo_id
 
     def __str__(self):
         """
-        a displayable representation of the album (called when printed)
-        :return: a string that represents all the data of some album instance
+        :return: a string representation of the album
         """
-        output_str = "AlbumParser " + self.__title + "\n"
-        for key in self.__album_data:
-            output_str += key + ':' + self.__album_data[key] + "\n"
-        return output_str
+        return "Album: " + str(self.__title) + "\n" + \
+               "id = " + str(self.__id) + "\n" + \
+               "product url = " + str(self.__product_url) + "\n" + \
+               "media item count = " + str(self.__media_items_count) + "\n" + \
+               "cover photo url = " + str(self.__cover_photos_base_url) + "\n" + \
+               "cover photo id = " + str(self.__cover_photo_id) + "\n\n"
 
-    def get_albums_map(self):
-        """
-        getter for the response (the map containing the albums)
-        """
-        return self.all_albums.get("albums")
-
-    def get_album_title(self):
-        """
-        returns the name of the given album
-        :param album: some album dictionary
-        :return: name of the album (string)
-        """
-        return self.__title
-
-    def get_album_id(self):
-        """
-        getter for the album id
-        """
+    def get_id(self):
         return self.__id
 
+    def get_title(self):
+        return self.__title
+
+    def get_product_url(self):
+        return self.__product_url
+
+    def get_item_count(self):
+        return self.__media_items_count
+
+    def get_cover_photo_url(self):
+        return self.__cover_photos_base_url
+
+    def get_cover_id(self):
+        return self.__cover_photo_id

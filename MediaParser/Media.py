@@ -20,7 +20,7 @@ class Media:
         self.__service = service
         self.__id = id
         self.__all_media = service.mediaItems().list(pageSize=MEDIA_TO_SHOW).execute()
-        self.__media_data = self.get_media_by_id()  # NOTE: this is O(N), where N can be big (num. of photos)
+        # self.__media_data = self.get_media_by_id()  # NOTE: this is O(N), where N can be big (num. of photos)
 
     def __str__(self):
         print(2)
@@ -56,6 +56,6 @@ class Media:
     #             break
     #         print("fetched ", len(media_item_lst), "/", n, "media items")
     #     return media_item_lst
-
-    def get_media_by_id(self):
-        pass
+    #
+    # def get_media_by_id(self):
+    #     pass
