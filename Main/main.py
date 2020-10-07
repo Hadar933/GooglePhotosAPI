@@ -7,13 +7,10 @@ https://console.cloud.google.com
 
                         ~MAKE SURE YOU'VE READ THE README.md~
 """
-import AlbumParser.AlbumParsing as ap
+from AlbumParser import AlbumParsing as ap
 
 if __name__ == '__main__':
-    d = ap.get_all_albums()
-    for item in d:
-        print(d[item])
-    # sri_lanka = Album(service, "Sri Lanka")
-    # print(sri_lanka)
-    # media = Media(service,1)
-    # print(media.get_media_map())
+    mamek = ap.instantiate_album("fun with mamek")
+    for item in mamek.get_media():
+        print(item)
+

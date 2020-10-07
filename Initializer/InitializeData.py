@@ -27,7 +27,6 @@ def create_service():
     share_scope = ['https://www.googleapis.com/auth/photoslibrary.sharing']
     all_scopes = [read_write_scope, share_scope]
 
-    print(api_name, api_version, all_scopes, sep=', ')
     all_scopes = [scope for scope in all_scopes[0]]
     cred = None
     pickle_file = f'token_{api_name}_{api_version}.pickle'

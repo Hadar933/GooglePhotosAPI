@@ -17,6 +17,8 @@ class Album:
         self.__media_items_count = media_items_count
         self.__cover_photos_base_url = cover_photos_base_url
         self.__cover_photo_id = cover_photo_id
+        print("fetching media for " + title)  # fetching media is a long process, so i've added an informative message
+        self.__album_media = AlbumParsing.get_media_in_album(self.__id)
 
     def __str__(self):
         """
@@ -46,3 +48,6 @@ class Album:
 
     def get_cover_id(self):
         return self.__cover_photo_id
+
+    def get_media(self):
+        return self.__album_media
