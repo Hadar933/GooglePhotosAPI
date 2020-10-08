@@ -117,11 +117,11 @@ def download_media_item(media_base_url, file_name):
 
 def download_album_content(album_name):
     """
-    downloads the entire content of album_name and stores it in dir_name
+    downloads the entire content of album_name and stores it in dir_name, which is a NEW directory
     """
     # TODO: theres a problem with the videos - they do not play
     album = instantiate_album(album_name)
-    dir_name = album_name.replace(" ", "_")+"_content"
+    dir_name = album_name.replace(" ", "_") + "_content"
     os.mkdir(dir_name)
     media = album.get_media()
     downloaded = 0  # counter
@@ -132,3 +132,56 @@ def download_album_content(album_name):
         download_media_item(base_url, path)
         downloaded += 1
         print("downloaded ", downloaded, "/", len(media), "(", name, ")")
+
+
+def find_media_based_on_filter(filters, include_archive):
+    """
+    this function searches for media that corresponds to the given filter.
+    note that this method is limited to the following filters:
+    ANIMALS,FASHION,LANDMARKS,RECEIPTS,WEDDINGS,ARTS,FLOWERS,LANDSCAPES,SCREENSHOTS,WHITEBOARDS,BIRTHDAYS,FOOD,NIGHT
+    SELFIES, CITYSCAPES,GARDENS,PEOPLE,SPORT, CRAFTS,HOLIDAYS,PERFORMANCES,TRAVEL,DOCUMENTS,HOUSES,PETS,UTILITY
+    :param filters: a list of content categories (10 items max). using more than one filter is treated as
+    searching filter1 AND filter2 AND ...
+    :param include_archive: boolean indicating if the search should include the archive
+    :return: lst of all relevant media
+    """
+    media_item_lst = []
+    page_token = ""
+    while True:
+        body = {
+            "pageToken": page_token if page_token != "" else "",
+            "pageSize": 100,
+            "filters": {
+                "contentFilter": {
+                    "includedContentCategories": filters
+                },
+                "includeArchivedMedia": include_archive
+            }
+        }
+        curr = SERVICE.mediaItems().search(body=body).execute()
+        media_items = curr.get(MEDIA_ITEM_ID, [])
+        media_item_lst.extend(media_items)
+        page_token = curr.get(NEXT_TOKEN_ID)
+        if not page_token:
+            break
+    return media_item_lst
+
+
+def scrape_name(person_name, media_url):
+    """
+    checks if some media item contains some person. for this to work, the data set should have a representation
+    of photos and names given do it.
+    :param person_name: a person we wish to loop for - must be the exact name as specified in the data set
+    :param media_url: a url address of some media item
+    :return: true: person in media. false otherwise
+    """
+
+
+def find_media_with_person(person_name,album):
+    """
+    we wrap the API media items search algorithm with a web scraper that searches the person_name in the data
+    :param person_name: a string that represents the name of a person we wish to search for
+    :param album: the album in which we wish to search (this is mainly provided because iterating over all media items
+    is a long process, yet one can set album=None to iterate over all media items is he wishes)
+    :return:
+    """
