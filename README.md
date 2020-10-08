@@ -6,10 +6,6 @@ GooglePhotosAPI enhancer (Python) - performs various operations on your google p
 Hadar Sharvit
 
 -------------------------------------------------------------------------------
-### Version: 
-1.0
-
--------------------------------------------------------------------------------
 
 ### Description:
 
