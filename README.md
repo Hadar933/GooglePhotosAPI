@@ -6,6 +6,11 @@ GooglePhotosAPI enhancer (Python) - performs various operations on your google p
 Hadar Sharvit
 
 -------------------------------------------------------------------------------
+### Latest Feature:
+
+download the content of some album to your pc - use AlbumParsing.download_album_content(album_name)
+
+-------------------------------------------------------------------------------
 
 ### Description:
 
