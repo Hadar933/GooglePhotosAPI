@@ -1,4 +1,4 @@
-GooglePhotosAPI enhancer (Python) - performs various operations on your google photos media
+GooglePhotosAPI wrapper (Python) - performs various operations on your google photos media
 -------------------------------------------------------------------------------
 
 ### created by:
