@@ -3,11 +3,10 @@ in this file we perform all the parsing that is relevant to an album. additing a
 """
 
 # IMPOTRS: #
-import os
-
+import os  # for creading archived so save downloadable content
+import urllib.request  # for downloading media items
 from AlbumParser.Album import Album
 from Initializer.InitializeData import create_service
-import urllib.request
 
 # CONSTANTS: #
 MEDIA_TO_SHOW = 100  # can only display 100 media items at once
@@ -72,7 +71,7 @@ def create_album(album_name):
     print(ALBUM_CREATION_SUCCESS_MSG.format(album_name))
 
 
-def get_media_in_album(id):
+def get_media_in_album(album_id):
     """
     this method returns a dictionary that contains all the media that is relevant to this album (key = media id)
     """
@@ -80,7 +79,7 @@ def get_media_in_album(id):
     page_token = ""
     while True:
         body = {
-            "albumId": id,
+            "albumId": album_id,
             "pageToken": page_token if page_token != "" else "",
             "pageSize": MEDIA_TO_SHOW
         }
@@ -176,12 +175,48 @@ def scrape_name(person_name, media_url):
     :return: true: person in media. false otherwise
     """
 
+    # need to use selenium (to simuilate a log in to a google account)
 
-def find_media_with_person(person_name,album):
+
+def find_media_with_person(person_name, album_name):
     """
     we wrap the API media items search algorithm with a web scraper that searches the person_name in the data
     :param person_name: a string that represents the name of a person we wish to search for
-    :param album: the album in which we wish to search (this is mainly provided because iterating over all media items
-    is a long process, yet one can set album=None to iterate over all media items is he wishes)
+    :param album_name: the album in which we wish to search (this is mainly provided because iterating over all media items
+    is a long process. Having said that, one can set album=None to iterate over all media items is desired)
     :return:
     """
+    # need to use selenium (to simulate a log in to a google account)
+
+
+def add_media_to_album(album_id, media_item_id_lst):
+    """
+    adds all the media items from the lst to the album with id album_id
+    * works only if both album_id and all the media_ids were created by using the API *
+    :param album_id: a string that represents an id of an album
+    :param media_item_id_lst: list of strings where each element is an id of some media item
+    """
+    body = {
+        "mediaItemIds": media_item_id_lst
+    }
+    SERVICE.albums().batchAddMediaItems(albumId=album_id, body=body).execute()
+
+
+def get_media_items_ids_lst(media_items):
+    """
+    given a dictionary of media items, returns a list of all ids
+    """
+    return [item.get("id") for item in media_items]
+
+
+def delete_media_item_from_album(album_id, media_item_id_lst):
+    """
+    deletes all media specified in media_item_id_lst from album represented by album_id
+    * works only if both album_id and all the media_ids were created by using the API *
+    :param album_id: a string that represents an id of an album
+    :param media_item_id_lst: list of strings where each element is an id of some media item
+    """
+    body = {
+        "mediaItemIds": media_item_id_lst
+    }
+    SERVICE.albums().batchRemoveMediaItems(albumId=album_id, body=body).execute()

@@ -10,6 +10,6 @@ https://console.cloud.google.com
 from AlbumParser import AlbumParsing as ap
 
 if __name__ == '__main__':
+    pass
 
-    for item in ap.find_media_based_on_filter(["SPORT"], True):
-        print(item)
+
